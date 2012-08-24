@@ -9,9 +9,6 @@ var game = {},
 game.start = function( ctx ) {
     this.ctx = ctx;
 
-    // Create an event object for the game
-    this.evt = new EventEmitter();
-
     // Get the first level map
     var map = new Map( this );
 
@@ -37,6 +34,9 @@ game.start = function( ctx ) {
         setTimeout( buildEnemy, --map.timeout );
     }
 };
+
+// Create an event object for the game
+module.exports.EventEmitter = new EventEmitter();
 
 module.exports = game;
 
