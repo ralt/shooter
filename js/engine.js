@@ -55,10 +55,16 @@ function hasCollision() {
         });
     });
 
-    // We need to loop through the collidedObjects to remove
-    // the duplicated items like [i, j] == [j, i]
-    collidedObjects.forEach( function( i ) {
-        collidedObjects.forEach( function( j, index ) {
+    // Remove the duplicates
+    removeDuplicates( collidedObjects );
+
+    return collidedObjects;
+}
+
+// Remove duplicated items like [i, j] == [j, i]
+function removeDuplicates( arr ) {
+    arr.forEach( function( i ) {
+        arr.forEach( function( j, index ) {
             if ( i === j ) {
                 return;
             }
@@ -67,12 +73,10 @@ function hasCollision() {
                 ( i[ 0 ] === j[ 1 ] ) && ( i[ 1 ] === j[ 0 ] )
             ) {
                 // If it's a duplicate, delete the second element
-                collidedObjects.splice( index, 1 );
+                arr.splice( index, 1 );
             }
         });
     });
-
-    return collidedObjects;
 }
 
 module.exports = engine;
