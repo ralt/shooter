@@ -43,17 +43,31 @@ function hasCollision() {
             }
 
             // Check if they collide
+            // http://cgp.wikidot.com/circle-to-circle-collision-detection
+            if ( Math.sqrt(
+                ( j.pos.x - i.pos.x ) * ( j.pos.x - i.pos.x ) +
+                ( j.pos.y - j.pos.y ) * ( j.pos.y - j.pos.y ) ) <
+                ( i.pos.rad + j.pos.rad )
+            ) {
+                // Add the two items to the returned object
+                collidedObjects.push( [ i, j ]);
+            }
+        });
+    });
 
-            // First, check the x positions
+    // We need to loop through the collidedObjects to remove
+    // the duplicated items like [i, j] == [j, i]
+    collidedObjects.forEach( function( i ) {
+        collidedObjects.forEach( function( j, index ) {
+            if ( i === j ) {
+                return;
+            }
+
             if (
-                ( ( i.pos.x + i.pos.rad ) - ( j.pos.x + j.pos.rad ) )
-                === 0 ) {
-
-                // Then the y positions
-                if (
-                    ( ( i.pos.y + i.pos.rad ) - ( j.pos.y + j.pos.rad ) )
-                === 0 ) {
-                }
+                ( i[ 0 ] === j[ 1 ] ) && ( i[ 1 ] === j[ 0 ] )
+            ) {
+                // If it's a duplicate, delete the second element
+                collidedObjects.splice( index, 1 );
             }
         });
     });
