@@ -13,5 +13,5 @@ cvs.height = height;
 var game = require( './game.js' );
 
 // Start a new game
-game.start();
+game.start( ctx );
 
