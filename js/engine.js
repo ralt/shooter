@@ -4,10 +4,10 @@ var evt = require( './game.js' ).EventEmitter;
 
 var engine = {};
 
-engine.items = [];
+engine.items = {};
 
 engine.add = function( obj ) {
-    this.items.[ obj.name ] = obj;
+    this.items[ obj.name ] = obj;
 };
 
 engine.move = function( obj ) {
@@ -25,7 +25,9 @@ engine.move = function( obj ) {
 // We have to check each object against the other objects
 function hasCollision() {
     var collidedObjects = [],
-        items = engine.items;
+
+        // Make a copy of the array of items
+        items = engine.items.slice( 0 );
 
     // Loop through the objects
     Object.keys( items ).forEach(
@@ -40,7 +42,19 @@ function hasCollision() {
                 return;
             }
 
+            // Check if they collide
 
+            // First, check the x positions
+            if (
+                ( ( i.pos.x + i.pos.rad ) - ( j.pos.x + j.pos.rad ) )
+                === 0 ) {
+
+                // Then the y positions
+                if (
+                    ( ( i.pos.y + i.pos.rad ) - ( j.pos.y + j.pos.rad ) )
+                === 0 ) {
+                }
+            }
         });
     });
 
