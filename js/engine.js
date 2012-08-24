@@ -11,7 +11,7 @@ engine.add = function( obj ) {
 };
 
 engine.move = function( obj ) {
-    this.items[ obj.name ] = obj;
+    this.add.apply( this, arguments );
 
     // If there is a collision
     var objs = hasCollision();
@@ -22,7 +22,29 @@ engine.move = function( obj ) {
     }
 };
 
+// We have to check each object against the other objects
 function hasCollision() {
+    var collidedObjects = [],
+        items = engine.items;
+
+    // Loop through the objects
+    Object.keys( items ).forEach(
+        function( i ) {
+
+        // Loop again
+        Object.keys( items ).forEach(
+            function( j ) {
+
+            // Don't care if it's the same object
+            if ( i === j ) {
+                return;
+            }
+
+
+        });
+    });
+
+    return collidedObjects;
 }
 
 module.exports = engine;
