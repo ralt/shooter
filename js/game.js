@@ -1,7 +1,7 @@
 "use strict";
 
-var game = {},
-    EventEmitter = require( 'events' ).EventEmitter,
+var EventEmitter = require( 'events' ).EventEmitter,
+    game = new EventEmitter(),
     Map = require( './Map.js' ),
     Player = require( './Player.js' ),
     Enemy = require( './Enemy.js' );
@@ -30,9 +30,6 @@ game.start = function( ctx ) {
         enemies.pop().enter();
     }
 };
-
-// Create an event object for the game
-module.exports.EventEmitter = new EventEmitter();
 
 module.exports = game;
 
