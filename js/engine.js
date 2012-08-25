@@ -42,15 +42,20 @@ function hasCollision() {
                 return;
             }
 
+            var x1 = items[ i ].pos.x,
+                x2 = items[ j ].pos.x,
+                y1 = items[ i ].pos.y,
+                y2 = items[ j ].pos.y,
+                rad1 = items[ i ].pos.rad,
+                rad2 = items[ j ].pos.rad;
+
             // Check if they collide
             // http://cgp.wikidot.com/circle-to-circle-collision-detection
-            if ( Math.sqrt(
-                ( j.pos.x - i.pos.x ) * ( j.pos.x - i.pos.x ) +
-                ( j.pos.y - j.pos.y ) * ( j.pos.y - j.pos.y ) ) <
-                ( i.pos.rad + j.pos.rad )
+            if (
+                Math.sqrt( ( x2 - x1 ) * ( x2 - x1 ) + ( y2 - y1 ) * ( y2 - y1 ) ) < ( rad1 + rad2 )
             ) {
                 // Add the two items to the returned object
-                collidedObjects.push( [ i, j ]);
+                collidedObjects.push( [ items[ i ], items[ j ] ]);
             }
         });
     });

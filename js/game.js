@@ -29,10 +29,6 @@ game.start = function( ctx ) {
     function buildEnemy() {
         enemies.pop().enter();
     }
-
-    while( --map.enemiesNumber ) {
-        setTimeout( buildEnemy, --map.timeout );
-    }
 };
 
 // Create an event object for the game
