@@ -3,8 +3,10 @@
 var enemy = {};
 
 module.exports = function( game ) {
-    var newEnemy = Object.create( enemy );
-    newEnemy.game = game;
-    return newEnemy;
+    return Object.create( enemy, {
+        game: {
+            value: game
+        }
+    });
 };
 
