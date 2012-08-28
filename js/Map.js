@@ -1,8 +1,10 @@
 "use strict";
 
-function Map( game ) {
-    this.game = game;
-}
+var map = {};
 
-module.exports = Map;
+module.exports = function( game ) {
+    var newMap = Object.create( map );
+    newMap.game = game;
+    return newMap;
+};
 

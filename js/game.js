@@ -10,15 +10,15 @@ game.start = function( ctx ) {
     this.ctx = ctx;
 
     // Get the first level map
-    var map = new Map( this );
+    var map = Map( this );
 
     // Spawn a new player
-    var player = new Player( this );
+    var player = Player( this );
 
     // Spawn enemies
     var enemies = [];
     map.enemiesNumber.forEach( function() {
-        enemies.push( new Enemy( this ) );
+        enemies.push( Enemy( this ) );
     });
 
     // The algorithm to add the new enemies to the map is simple:

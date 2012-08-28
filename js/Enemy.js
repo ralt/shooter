@@ -1,8 +1,10 @@
 "use strict";
 
-function Enemy( game ) {
-    this.game = game;
-}
+var enemy = {};
 
-module.exports = Enemy;
+module.exports = function( game ) {
+    var newEnemy = Object.create( enemy );
+    newEnemy.game = game;
+    return newEnemy;
+};
 
