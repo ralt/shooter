@@ -631,7 +631,7 @@ map.create = function( level ) {
     });
 
     // Add them to the game engine
-    objects.forEach( engine.add.bind( engine ) );
+    objects.forEach( engine.add, engine );
 
     // And draw'em
     objects.forEach( this.draw );
