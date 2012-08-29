@@ -412,7 +412,7 @@ game.start = function( ctx ) {
     var enemies = [];
     for ( var i = 0; i < map.enemiesNumber; i++ ) {
         enemies.push( Enemy( this ) );
-    };
+    }
 
     // The algorithm to add the new enemies to the map is simple:
     //   - Have a long timeout, and add an enemy at each timeout
