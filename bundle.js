@@ -608,6 +608,10 @@ require.define("/js/Map.js",function(require,module,exports,__dirname,__filename
 var map = {},
     engine = require( './engine.js' ),
     uuid = require( 'node-uuid' ),
+    nb = function( level ) {
+        return ( 10 * Math.log( level + 1 ) ).toFixed( 0 );
+    },
+    rad = 5,
     game;
 
 /**
@@ -618,7 +622,7 @@ var map = {},
  */
 map.create = function( level ) {
     // Define the enemies number
-    this.enemiesNumber = level * 10;
+    this.enemiesNumber = nb( level );
 
     var positions = randomPos( level );
 
@@ -661,9 +665,8 @@ map.draw = function( o ) {
  * Generate random positions and return an array of them.
  */
 function randomPos( level ) {
-    // Generate level * 3 circles
     var positions = [];
-    for ( var i = 0; i < 10 * level; i++ ) {
+    for ( var i = 0; i < nb( level ); i++ ) {
         positions.push( generatePos() );
     }
     return positions;
@@ -681,7 +684,7 @@ function generatePos() {
     return {
         x: x,
         y: y,
-        rad: 5
+        rad: rad
     };
 }
 
