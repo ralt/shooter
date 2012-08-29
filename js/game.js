@@ -2,27 +2,27 @@
 
 var EventEmitter = require( 'events' ).EventEmitter,
     game = new EventEmitter(),
-    Map = require( './Map.js' ),
-    Player = require( './Player.js' ),
-    Enemy = require( './Enemy.js' );
+    mapHandler = require( './map.js' ),
+    playerHandler = require( './player.js' ),
+    enemyHandler = require( './enemy.js' );
 
 game.start = function( ctx ) {
     this.ctx = ctx;
 
     // Get the first level map
-    var map = Map( this );
+    var map = mapHandler( this );
 
     // And create it
     this.level = this.level++ || 1;
     map.create( this.level );
 
     // Spawn a new player
-    var player = Player( this );
+    var player = playerHandler( this );
 
     // Spawn enemies
     var enemies = [];
     for ( var i = 0; i < map.enemiesNumber; i++ ) {
-        enemies.push( Enemy( this ) );
+        enemies.push( enemyHandler( this ) );
     }
 
     // The algorithm to add the new enemies to the map is simple:
