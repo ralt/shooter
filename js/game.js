@@ -12,14 +12,18 @@ game.start = function( ctx ) {
     // Get the first level map
     var map = Map( this );
 
+    // And create it
+    this.level = this.level++ || 1;
+    map.create( this.level );
+
     // Spawn a new player
     var player = Player( this );
 
     // Spawn enemies
     var enemies = [];
-    map.enemiesNumber.forEach( function() {
+    for ( var i = 0; i < map.enemiesNumber; i++ ) {
         enemies.push( Enemy( this ) );
-    });
+    };
 
     // The algorithm to add the new enemies to the map is simple:
     //   - Have a long timeout, and add an enemy at each timeout
