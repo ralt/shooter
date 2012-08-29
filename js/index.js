@@ -1,6 +1,6 @@
-"use strict";
+//"use strict";
 
-require( 'live-reload' )( 8081 );
+//require( 'live-reload' )( 8081 );
 
 var cvs = document.getElementById( 'cvs' ),
     ctx = cvs.getContext( '2d' );
@@ -12,7 +12,7 @@ var width = 500,
 cvs.width = width;
 cvs.height = height;
 
-var game = require( './js/game.js' );
+var game = require( './game.js' );
 
 // Start a new game
 game.start( ctx );

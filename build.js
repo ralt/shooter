@@ -6,6 +6,7 @@
 var path = require("path"),
     child_process = require("child_process"),
     fs = require("fs"),
+    uuid = require( 'node-uuid' ),
     clientModules = path.join(__dirname, "js")
 
 function readFiles(dir) {
@@ -28,17 +29,29 @@ function readFiles(dir) {
 }
 
 function build() {
-    var command = "browserify -e js/main.js -o bundle.js";
+    var command = "browserify -e js/index.js -o bundle.js";
     child_process.exec( command,
         function( err, stdout, stderr ) {
         if ( err ) {
             console.error( err );
         }
         else {
-            console.log( 'Rebuilt.' );
+            console.log( 'Rebuild #' + uuid.v4() );
         }
     });
 }
+
+// Build a static server for this folder.
+var static = require( 'node-static' );
+
+var file = new ( static.Server )( '.' );
+
+require( 'http' ).createServer( function( req, res ) {
+    req.addListener( 'end', function() {
+        file.serve( req, res );
+    });
+}).listen( 8080 );
+console.log( 'Listening on port 8080' );
 
 readFiles(clientModules)
 build()
