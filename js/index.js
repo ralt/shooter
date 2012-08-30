@@ -1,6 +1,6 @@
-//"use strict";
+"use strict";
 
-//require( 'live-reload' )( 8081 );
+require( 'live-reload' )( 8081 );
 
 var cvs = document.getElementById( 'cvs' ),
     ctx = cvs.getContext( '2d' );
