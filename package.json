@@ -12,8 +12,8 @@
     },
     "devDependencies": {
         "live-reload": "0.0.x",
-        "browserify-server": "1.1.x"
-    },
+        "node-static": "0.6.x"
+    }
     "repository": {
         "type": "git",
         "url": "https://github.com/Ralt/shooter.git"
