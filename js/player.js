@@ -70,6 +70,12 @@ player.move = function( dir ) {
 };
 
 /**
+ * Shoots a bullet
+ */
+player.shoot = function() {
+};
+
+/**
  * Draws the player at each frame
  */
 player.draw = function() {

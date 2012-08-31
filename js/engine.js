@@ -1,6 +1,6 @@
 "use strict";
 
-var evt = require( './game.js' ).EventEmitter;
+var game = require( './game.js' );
 
 var engine = {};
 
@@ -18,7 +18,7 @@ engine.move = function( obj ) {
     if ( objs.length ) {
 
         // Emit an event with the collided objects
-        evt.emit( 'collision', objs );
+        game.emit( 'collision', objs );
     }
 };
 
