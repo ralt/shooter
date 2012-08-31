@@ -18,6 +18,8 @@ game.start = function( ctx ) {
 
     // Spawn a new player
     var player = playerHandler( this );
+    // And get him on the map
+    player.enter();
 
     // Spawn enemies
     var enemies = [];

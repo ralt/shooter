@@ -35,9 +35,9 @@ function build() {
         if ( err ) {
             console.error( err );
         }
-        else {
-            console.log( 'Rebuild #' + uuid.v4() );
-        }
+        //else {
+        //    console.log( 'Rebuild #' + uuid.v4() );
+        //}
     });
 }
 

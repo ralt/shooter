@@ -391,27 +391,29 @@ require.define("/js/game.js",function(require,module,exports,__dirname,__filenam
 
 var EventEmitter = require( 'events' ).EventEmitter,
     game = new EventEmitter(),
-    Map = require( './Map.js' ),
-    Player = require( './Player.js' ),
-    Enemy = require( './Enemy.js' );
+    mapHandler = require( './map.js' ),
+    playerHandler = require( './player.js' ),
+    enemyHandler = require( './enemy.js' );
 
 game.start = function( ctx ) {
     this.ctx = ctx;
 
     // Get the first level map
-    var map = Map( this );
+    var map = mapHandler( this );
 
     // And create it
     this.level = this.level++ || 1;
     map.create( this.level );
 
     // Spawn a new player
-    var player = Player( this );
+    var player = playerHandler( this );
+    // And get him on the map
+    player.enter();
 
     // Spawn enemies
     var enemies = [];
     for ( var i = 0; i < map.enemiesNumber; i++ ) {
-        enemies.push( Enemy( this ) );
+        enemies.push( enemyHandler( this ) );
     }
 
     // The algorithm to add the new enemies to the map is simple:
@@ -603,7 +605,7 @@ EventEmitter.prototype.listeners = function(type) {
 
 });
 
-require.define("/js/Map.js",function(require,module,exports,__dirname,__filename,process){"use strict";
+require.define("/js/map.js",function(require,module,exports,__dirname,__filename,process){"use strict";
 
 var map = {},
     engine = require( './engine.js' ),
@@ -611,7 +613,7 @@ var map = {},
     nb = function( level ) {
         return ( 10 * Math.log( level + 1 ) ).toFixed( 0 );
     },
-    rad = 30,
+    rad = 10,
     game;
 
 /**
@@ -1371,9 +1373,82 @@ require.define("/node_modules/crypto-browserify/rng.js",function(require,module,
 }())
 });
 
-require.define("/js/Player.js",function(require,module,exports,__dirname,__filename,process){"use strict";
+require.define("/js/player.js",function(require,module,exports,__dirname,__filename,process){"use strict";
 
-var player = {};
+var player = {},
+    color = '#0000FF',
+    startAngle = 0,
+    endAngle = Math.PI*2,
+    keyEvt;
+
+/**
+ * Initiliazes the player
+ */
+player.enter = function() {
+    var ctx = this.game.ctx;
+
+    this.pos = {
+        x: 10,
+        y: 10,
+        rad: 10
+    };
+    this.dir;
+
+    // Adds an event listener
+    // But first, save the keycodes
+    var keyCodes = {
+        '37': 'left',
+        '38': 'top',
+        '39': 'right',
+        '40': 'bottom',
+        '32': 'space'
+    };
+
+    keyEvt = window.addEventListener( 'keydown',
+        function( e ) {
+        // If it's one of the keycodes
+        if ( e.keyCode in keyCodes ) {
+            // Do something with the player
+            that.act( keyCodes[ e.keyCode ] );
+        }
+    }, false );
+
+    // And draw the first player
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.arc( pos.x, pos.x, pos.rad, startAngle, endAngle, true );
+    ctx.closePath();
+    ctx.fill();
+
+    // Then draw at each frame
+    this.draw();
+};
+
+/**
+ * Chooses the action depending on the key pressed
+ */
+player.act = function( action ) {
+    // Shoot!
+    if ( action === 'space' ) {
+        this.shoot();
+    }
+    else {
+        this.move( action );
+    }
+};
+
+/**
+ * Moves the player
+ */
+player.move = function( dir ) {
+    this.dir = dir;
+};
+
+/**
+ * Draws the player at each frame
+ */
+player.draw = function() {
+};
 
 module.exports = function( game ) {
     return Object.create( player, {
@@ -1386,7 +1461,7 @@ module.exports = function( game ) {
 
 });
 
-require.define("/js/Enemy.js",function(require,module,exports,__dirname,__filename,process){"use strict";
+require.define("/js/enemy.js",function(require,module,exports,__dirname,__filename,process){"use strict";
 
 var enemy = {};
 
