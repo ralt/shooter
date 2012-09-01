@@ -6,7 +6,7 @@ var map = {},
     nb = function( level ) {
         return ( 10 * Math.log( level + 1 ) ).toFixed( 0 );
     },
-    rad = 30,
+    rad = 10,
     game;
 
 /**

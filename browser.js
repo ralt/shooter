@@ -5,13 +5,38 @@
 // Browserify part
 var fs = require( 'fs' ),
     browserify = require( 'browserify' ),
-    b = browserify( {
-        watch: true,
-    });
+    debug,
+    uglify;
+
+if ( process.argv[ 2 ] === 'debug' ) {
+    debug = true;
+    uglify = false;
+}
+else {
+    debug = false;
+    uglify = true;
+}
+
+var b = browserify( {
+    watch: true,
+    debug: debug
+});
 
 b.addEntry( 'js/index.js' );
 
 fs.writeFileSync( 'bundle.js', b.bundle() );
+
+// Uglify part
+if ( uglify ) {
+    var exec = require( 'child_process' ).exec,
+        command = 'uglifyjs bundle.js > tmp.js && mv tmp.js bundle.js';
+
+    exec( command );
+
+    b.on( 'bundle', function() {
+        exec( command );
+    });
+}
 
 // Static server part
 var staticServer = require( 'node-static' );
