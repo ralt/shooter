@@ -613,7 +613,7 @@ var map = {},
     nb = function( level ) {
         return ( 10 * Math.log( level + 1 ) ).toFixed( 0 );
     },
-    rad = 10,
+    rad = 30,
     game;
 
 /**
@@ -1379,13 +1379,16 @@ var player = {},
     color = '#0000FF',
     startAngle = 0,
     endAngle = Math.PI*2,
-    keyEvt;
+    that,
+    shootEvt,
+    moveEvt;
 
 /**
  * Initiliazes the player
  */
 player.enter = function() {
-    var ctx = this.game.ctx;
+    var ctx = this.game.ctx,
+        that = this;
 
     this.pos = {
         x: 10,
@@ -1394,23 +1397,16 @@ player.enter = function() {
     };
     this.dir;
 
-    // Adds an event listener
-    // But first, save the keycodes
-    var keyCodes = {
-        '37': 'left',
-        '38': 'top',
-        '39': 'right',
-        '40': 'bottom',
-        '32': 'space'
-    };
+    // Left click = shoot there
+    shootEvt = ctx.canvas.addEventListener( 'click',
+        function() {
+        that.shoot();
+    }, false );
 
-    keyEvt = window.addEventListener( 'keydown',
-        function( e ) {
-        // If it's one of the keycodes
-        if ( e.keyCode in keyCodes ) {
-            // Do something with the player
-            that.act( keyCodes[ e.keyCode ] );
-        }
+    // Right click = move to there using the A* algorithm
+    moveEvt = ctx.canvas.addEventListener( 'contextmenu',
+        function() {
+        that.move();
     }, false );
 
     // And draw the first player
@@ -1422,19 +1418,6 @@ player.enter = function() {
 
     // Then draw at each frame
     this.draw();
-};
-
-/**
- * Chooses the action depending on the key pressed
- */
-player.act = function( action ) {
-    // Shoot!
-    if ( action === 'space' ) {
-        this.shoot();
-    }
-    else {
-        this.move( action );
-    }
 };
 
 /**
@@ -1482,9 +1465,7 @@ module.exports = function( game ) {
 
 });
 
-require.define("/js/index.js",function(require,module,exports,__dirname,__filename,process){//"use strict";
-
-//require( 'live-reload' )( 8081 );
+require.define("/js/index.js",function(require,module,exports,__dirname,__filename,process){"use strict";
 
 var cvs = document.getElementById( 'cvs' ),
     ctx = cvs.getContext( '2d' );
