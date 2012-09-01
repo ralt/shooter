@@ -1,6 +1,7 @@
 "use strict";
 
 var player = {},
+    bullet = require( './bullet.js' ),
     color = '#0000FF',
     startAngle = 0,
     endAngle = Math.PI*2,
@@ -24,14 +25,14 @@ player.enter = function() {
 
     // Left click = shoot there
     shootEvt = ctx.canvas.addEventListener( 'click',
-        function() {
-        that.shoot();
+        function( e ) {
+        that.shoot( e );
     }, false );
 
     // Right click = move to there using the A* algorithm
     moveEvt = ctx.canvas.addEventListener( 'contextmenu',
-        function() {
-        that.move();
+        function( e ) {
+        that.move( e );
     }, false );
 
     // And draw the first player
@@ -48,14 +49,17 @@ player.enter = function() {
 /**
  * Moves the player
  */
-player.move = function( dir ) {
-    this.dir = dir;
+player.move = function( e ) {
+    // Use the A* algorithm to know where the player is going
 };
 
 /**
  * Shoots a bullet
  */
-player.shoot = function() {
+player.shoot = function( e ) {
+    // Spawn a new bullet and shoot it
+    var newBullet = bullet( this.game );
+    newBullet.shoot( e );
 };
 
 /**
